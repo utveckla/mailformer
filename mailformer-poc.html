@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Mailformer | Proof Of Concept</title>
+	<link href="assets/css/external/bootstrap.5.0.1.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="form-group">
+		<label for="template-selector">Select template</label>
+		<select class="form-control" id="template-selector" onchange="changeMailTemplate(this.value)">
+			<option value="" selected>Select template</option>
+			<option value="poc">Mailformer POC</option>
+		</select>
+	</div>
+	<button id="download-email-template">Grab it!</button>
+	<div id="form-area">
+	</div>
+	<div id="template-area">
+	</div>
+	<script type="text/javascript" src="assets/js/external/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="assets/js/external/bootstrap.5.0.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/mailformer.js"></script>
+</body>
+
+</html>
