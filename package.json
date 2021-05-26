@@ -1,0 +1,24 @@
+{
+  "name": "mailformer",
+  "version": "0.0.1",
+  "description": "A tool for generating e-mails while eliminating human error.",
+  "scripts": {
+    "lint": "eslint ./src/assets/js",
+    "lint:fix": "eslint --fix ./src/assets/js",
+    "lint:silent": "npm run lint -- --quiet",
+    "precommit": "npm run lint"
+  },
+  "repository": "https://github.com/utveckla/mailformer.git",
+  "author": "Henry Tang Kai",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-jsdoc": "^35.0.0",
+    "jsdoc": "^3.6.7",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0"
+  }
+}

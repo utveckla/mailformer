@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+reports
+docs
+.nyc_output
+coverage
+lcov.info
+node_modules
+*.log*
+package-lock.json
+.DS_Store
+Thumbs.db
+Desktop.ini

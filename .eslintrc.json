@@ -1,0 +1,75 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jquery": true,
+        "mocha": true
+    },
+    "plugins": [
+        "jsdoc"
+    ],
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+            2,
+            {
+                "allow": [
+                    "info",
+                    "error",
+                    "warn"
+                ]
+            }
+        ],
+        "valid-jsdoc": [
+            2,
+            {
+                "prefer": {
+                    "arg": "param",
+                    "argument": "param",
+                    "return": "returns"
+                },
+                "preferType": {
+                    "array": "Array",
+                    "Boolean": "boolean",
+                    "function": "Function",
+                    "Number": "number",
+                    "object": "Object",
+                    "String": "string"
+                },
+                "requireReturn": true,
+                "requireReturnType": true
+            }
+        ],
+        "jsdoc/check-param-names": 2,
+        "jsdoc/check-tag-names": 2,
+        "jsdoc/check-types": 2,
+        "jsdoc/newline-after-description": [
+            2,
+            "always"
+        ],
+        "jsdoc/require-description-complete-sentence": 1,
+        "jsdoc/require-param": 2,
+        "jsdoc/require-param-description": 2,
+        "jsdoc/require-param-type": 2
+    }
+}
