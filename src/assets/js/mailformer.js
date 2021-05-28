@@ -8,7 +8,19 @@ const updateTemplate = (inputElement) => {
     const targetAudience = inputElement.dataset.target;
 
     document.querySelectorAll(`[data-id*="${targetAudience}"]`).forEach((elem) => {
-        elem.innerHTML = inputValue;
+        switch (elem.nodeName) {
+            case "SPAN":
+                elem.innerHTML = inputValue;
+                break;
+            case "A":
+                elem.href = inputValue;
+                break;
+            case "IMG":
+                elem.src = inputValue;
+                break;
+            default:
+                console.warn("Unsupported editable element detected.");
+        }
     });
 };
 
@@ -44,12 +56,12 @@ const downloadEmailTemplate = () => {
     let mainRecipients = "test@notanemail.test1";
 
     switch (mailTemplate) {
-    case "poc":
-        subject = "The royal e-mail subject";
-        recipients = mainRecipients;
-        break;
-    default:
-        console.warn("Remember to select a template?");
+        case "poc":
+            subject = "The royal e-mail subject";
+            recipients = mainRecipients;
+            break;
+        default:
+            console.warn("Remember to select a template?");
     }
 
     let elHtml = `Subject: ${subject}\n`;
@@ -88,16 +100,24 @@ const createMailForm = () => {
 
         inputIds.push(elementId);
 
-        if (elementType === "input") {
-            elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
-        }
-
-        if (elementType === "text") {
-            elementInputHTML = `<textarea data-target="${elementId}" id="form-input-${i}" rows="4" cols="50" class="form-control" value="${elementDefaultValue}"></textarea>`;
-        }
-
-        if (elementType === "date") {
-            elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="date" class="form-control" value="${elementDefaultValue}">`;
+        switch (elementType) {
+            case "input":
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
+                break;
+            case "url":
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
+                break;
+            case "image":
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
+                break;
+            case "text":
+                elementInputHTML = `<textarea data-target="${elementId}" id="form-input-${i}" rows="4" cols="50" class="form-control" value="${elementDefaultValue}"></textarea>`;
+                break;
+            case "date":
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="date" class="form-control" value="${elementDefaultValue}">`;
+                break;
+            default:
+                console.warn("Unsupported editable element detected.");
         }
 
         const elementHTMLString = `<div class="mb-3">
