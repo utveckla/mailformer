@@ -35,7 +35,7 @@ const changeMailTemplate = (selectedTemplate) => {
                 const resp = request.responseText;
 
                 templateArea.innerHTML = resp;
-                createMailForm();
+                generateMailForm();
             }
         };
 
@@ -83,7 +83,7 @@ document.querySelector("#download-email-template").onclick = () => {
     downloadEmailTemplate();
 };
 
-const createMailForm = () => {
+const generateMailForm = () => {
     formArea.innerHTML = "";
 
     document.querySelectorAll("#template-area .editable").forEach((elem, i) => {
@@ -105,13 +105,13 @@ const createMailForm = () => {
                 elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
                 break;
             case "url":
-                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elem.href}">`;
                 break;
             case "image":
-                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elementDefaultValue}">`;
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="text" class="form-control" value="${elem.src}">`;
                 break;
             case "text":
-                elementInputHTML = `<textarea data-target="${elementId}" id="form-input-${i}" rows="4" cols="50" class="form-control" value="${elementDefaultValue}"></textarea>`;
+                elementInputHTML = `<textarea data-target="${elementId}" id="form-input-${i}" rows="4" cols="50" class="form-control">${elementDefaultValue}</textarea>`;
                 break;
             case "date":
                 elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="date" class="form-control" value="${elementDefaultValue}">`;
