@@ -79,6 +79,22 @@ const downloadEmailTemplate = () => {
     link.click();
 };
 
+const getListOptions = (elementId) => {
+    const listOptions = window.lists[elementId];
+    let optionsHTML;
+
+    if (typeof listOptions === "undefined") {
+        alert("You forgot to add a list called: " + elementId + "to ./assets/lists.js");
+        return;
+    }
+
+    listOptions.forEach((option) => {
+        optionsHTML += `<option value="${option}">${option}</option>`;
+    });
+
+    return optionsHTML;
+};
+
 document.querySelector("#download-email-template").onclick = () => {
     downloadEmailTemplate();
 };
@@ -115,6 +131,9 @@ const generateMailForm = () => {
                 break;
             case "date":
                 elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="date" class="form-control" value="${elementDefaultValue}">`;
+                break;
+            case "list":
+                elementInputHTML = `<select data-target="${elementId}" id="form-input-${i}" class="form-control">${getListOptions(elementId)}</select>`;
                 break;
             default:
                 console.warn("Unsupported editable element detected.");
