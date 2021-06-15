@@ -3,6 +3,24 @@ const templateSelector = document.querySelector("#template-selector");
 const templateArea = document.querySelector("#template-area");
 const formArea = document.querySelector("#form-area");
 
+const pad2 = (n) => {
+    return n < 10 ? '0' + n : n;
+};
+
+const getTimeStamp = () => {
+    const date = new Date();
+
+    timestamp = (date.getFullYear().toString().substring(2) +
+        pad2(date.getMonth() + 1) +
+        pad2(date.getDate()) +
+        pad2(date.getHours()) +
+        pad2(date.getMinutes()) +
+        pad2(date.getMilliseconds()) +
+        pad2(date.getSeconds()));
+
+    return timestamp;
+};
+
 const updateTemplate = (inputElement) => {
     const inputValue = inputElement.value;
     const targetAudience = inputElement.dataset.target;
@@ -28,11 +46,13 @@ const updateTemplate = (inputElement) => {
 const changeMailTemplate = (selectedTemplate) => {
     if (selectedTemplate !== "") {
         const request = new XMLHttpRequest();
-        request.open("GET", `assets/html/mail-templates/${selectedTemplate}.html`, true);
+        request.open("GET", `assets/html/mail-templates/${selectedTemplate}.html?t=${getTimeStamp()}`, true);
 
         request.onload = () => {
             if (request.status >= 200 && request.status < 400) {
                 const resp = request.responseText;
+                formArea.innerHTML = "";
+                inputIds = [];
 
                 templateArea.innerHTML = resp;
                 generateMailForm();
@@ -50,6 +70,7 @@ const changeMailTemplate = (selectedTemplate) => {
 const downloadEmailTemplate = () => {
     const link = document.createElement("a");
     const mailTemplate = templateSelector.options[templateSelector.selectedIndex].value;
+    const templateFormat = document.querySelector('input[name=templateFormat]:checked').value;
     let subject = "";
     let recipients = "";
     let bcc = "";
@@ -64,18 +85,26 @@ const downloadEmailTemplate = () => {
             console.warn("Remember to select a template?");
     }
 
-    let elHtml = `Subject: ${subject}\n`;
-    elHtml += "X-Unsent: 1\n";
-    elHtml += `TO: ${recipients}\n`;
-    elHtml += `BCC: ${bcc}\n`;
-    elHtml += "Content-Type: text/html; charset=utf-8\n";
+    let elHtml = "";
+    if (templateFormat === "eml") {
+        elHtml += `Subject: ${subject}\n`;
+        elHtml += "X-Unsent: 1\n";
+        elHtml += "X-Uniform-Type-Identifier: com.apple.mail-draft\n";
+        elHtml += `TO: ${recipients}\n`;
+        elHtml += `BCC: ${bcc}\n`;
+        elHtml += "Content-Type: text/html; charset=utf-8\n";
+    }
     elHtml += "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
     elHtml += "<head>\n";
-    elHtml += document.querySelector("#template-area").innerHTML;
-    elHtml += "</body></html>";
+    elHtml += document.querySelector("#template-styles").innerHTML;
+    elHtml += "</head>\n";
+    elHtml += "<body>\n";
+    elHtml += document.querySelector("#template-body").innerHTML;
+    elHtml += "</body>\n";
+    elHtml += "</html>";
 
-    link.setAttribute("download", `date-${mailTemplate}.eml`);
-    link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(elHtml)}`);
+    link.setAttribute("download", `date-${mailTemplate}.${templateFormat === "eml" ? "eml" : "html"}`);
+    link.setAttribute("href", `data:text/html;charset=utf-8,${encodeURIComponent(elHtml)}`);
     link.click();
 };
 
@@ -100,8 +129,6 @@ document.querySelector("#download-email-template").onclick = () => {
 };
 
 const generateMailForm = () => {
-    formArea.innerHTML = "";
-
     document.querySelectorAll("#template-area .editable").forEach((elem, i) => {
         const elementId = elem.dataset.id;
 
@@ -128,6 +155,9 @@ const generateMailForm = () => {
                 break;
             case "text":
                 elementInputHTML = `<textarea data-target="${elementId}" id="form-input-${i}" rows="4" cols="50" class="form-control">${elementDefaultValue}</textarea>`;
+                break;
+            case "number":
+                elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="number" class="form-control" value="${elementDefaultValue}">`;
                 break;
             case "date":
                 elementInputHTML = `<input data-target="${elementId}" id="form-input-${i}" type="date" class="form-control" value="${elementDefaultValue}">`;
@@ -160,6 +190,8 @@ const generateMailForm = () => {
             updateTemplate(elementFirstChild, elem);
         };
 
-        document.querySelector("#form-area").appendChild(elementHTML.body.firstChild);
+        formArea.appendChild(elementHTML.body.firstChild);
+
+        updateTemplate(elementFirstChild, elem);
     });
 };

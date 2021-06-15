@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Mailformer | Proof Of Concept</title>
+	<title>Mailformer</title>
 	<link href="assets/css/external/bootstrap.5.0.1.min.css" rel="stylesheet">
 	<link href="assets/css/mailformer.css" rel="stylesheet">
 </head>
@@ -13,9 +13,7 @@
 
 	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
 		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Mailformer</a>
-		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-			aria-label="Toggle navigation">
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</header>
@@ -26,24 +24,30 @@
 				<div class="position-sticky p-3">
 					<div>
 						<select class="form-select mb-3" id="template-selector" onchange="changeMailTemplate(this.value)">
-							<option selected>Select template:</option>
+							<option value="0" selected>Select template:</option>
 							<option value="poc">Mailformer POC</option>
 							<option value="very-basic">Mailformer POC very basic</option>
 						</select>
-					<hr />
-					<div id="form-area">
+						<hr />
+						<div id="form-area">
+						</div>
 					</div>
-				</div>
 				</div>
 			</nav>
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-				<div
-					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Output:</h1>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="templateFormat" id="html" value="html">
+						<label class="form-check-label" for="html">.HTML</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="templateFormat" id="eml" value="eml" checked>
+						<label class="form-check-label" for="eml">.EML</label>
+					</div>
 					<div class="btn-toolbar mb-2 mb-md-0">
 						<div class="btn-group me-2">
-							<button type="button" class="btn btn-sm btn-outline-secondary"
-								id="download-email-template">Download</button>
+							<button type="button" class="btn btn-sm btn-primary" id="download-email-template">Download</button>
 						</div>
 					</div>
 				</div>
@@ -55,9 +59,8 @@
 
 	<script type="text/javascript" src="assets/js/external/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="assets/js/external/bootstrap.5.0.1.min.js"></script>
-	<script type="text/javascript" src="assets/js/external/feather.4.28.0.min.js"></script>
-	<script type="text/javascript" src="assets/lists.js"></script>
-	<script type="text/javascript" src="assets/js/mailformer.js"></script>
+	<script type="text/javascript" src="assets/lists.js?v=0"></script>
+	<script type="text/javascript" src="assets/js/mailformer.js?v=0"></script>
 </body>
 
 </html>
